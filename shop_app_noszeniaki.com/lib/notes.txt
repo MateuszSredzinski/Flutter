@@ -1,0 +1,109 @@
+Załóżmy, że nasza aplikacja do zamawiania samochodów BMW umożliwia użytkownikowi wybieranie różnych opcji dla samochodu, takich jak kolor, wyposażenie i silnik. Możemy utworzyć klasę modelu, która będzie przechowywać informacje o aktualnie wybranych opcjach:
+
+kotlin
+Copy code
+class CarOptions {
+  Color color;
+  Engine engine;
+  List<Equipment> equipment;
+
+  CarOptions({
+    this.color,
+    this.engine,
+    this.equipment,
+  });
+}
+Następnie możemy użyć Providera, aby udostępnić te informacje w całej aplikacji:
+
+scss
+Copy code
+class CarOptionsProvider with ChangeNotifier {
+  CarOptions _options = CarOptions();
+
+  CarOptions get options => _options;
+
+  void updateOptions(CarOptions newOptions) {
+    _options = newOptions;
+    notifyListeners();
+  }
+}
+Teraz, w każdym miejscu w aplikacji, gdzie chcemy uzyskać dostęp do aktualnie wybranych opcji, możemy użyć Consumer lub Selector z Providera:
+
+css
+Copy code
+class ColorSelection extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<CarOptionsProvider>(
+      builder: (context, provider, child) {
+        return DropdownButton<Color>(
+          value: provider.options.color,
+          onChanged: (newColor) {
+            provider.updateOptions(
+              provider.options.copyWith(color: newColor),
+            );
+          },
+          items: [
+            DropdownMenuItem(
+              child: Text("Red"),
+              value: Color.red,
+            ),
+            DropdownMenuItem(
+              child: Text("Green"),
+              value: Color.green,
+            ),
+            DropdownMenuItem(
+              child: Text("Blue"),
+              value: Color.blue,
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+W ten sposób, gdy użytkownik wybierze nowy kolor, informacje te będą automatycznie udostępnione we wszystkich widgetach, które korzystają z tego samego Providera. To pozwala na łatwe i elastyczne zarządzanie stanem aplikacji w Flutterze.
+
+
+
+void addProduct(Product product) {
+    final url = Uri.parse(
+        'https://noszeniakicom-default-rtdb.europe-west1.firebasedatabase.app/products.json');
+    http
+
+
+
+??????????????????????????????????????????????????????????????????????????
+mixin Agility {
+  void sitDown() {
+    print('Sitting down...');
+  }
+}
+
+
+class Mumminek {
+  void breathe(){
+    print('Breath in.... breathe out....');
+  }
+}
+
+
+class Person extends Mumminek with Agility {
+
+  String name;
+  int age;
+  
+  Person(this.name, this.age);
+}
+
+
+void main() {
+  final pers = Person('Max', 30);
+  print (pers.name);
+  pers.breathe();
+  pers.sitDown();
+}
+??????????????????????????????????????????????????????????????????????????
+
+
+manifest xml android:usesCleartextTraffic="true"
